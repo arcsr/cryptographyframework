@@ -10,7 +10,7 @@ def main():
 
 	args = sys.argv[1:]
 	if(args.__len__() < 5):
-		print "Usage rot_cipher.py -s <string> -r <rot #> [-e|-d]\n"	
+		print "Usage rot_cipher.py -s string -r rot# -e|-d\n"	
 		sys.exit(1)
 
 	if((args[0] == "-s") and (args[2] == "-r") and (args[4] == "-e")):
@@ -22,7 +22,7 @@ def main():
 		rot = int(args[3])
 		to_do = "decode"
 	else:
-		print "Usage rot_cipher.py -s <string> -r <rot #> [-e|-d]\n"	
+		print "Usage rot_cipher.py -s string -r rot# -e|-d\n"	
 		sys.exit(1)
 
 	lower = string.ascii_lowercase
