@@ -41,6 +41,8 @@ def main():
 
 	if(to_do == "decode"):
 		returned_string = decode_string(text,common_morse)
+	elif(to_do == "encode"):
+		returned_string = encode_string(text,morse_common)
 
 	print returned_string
 
@@ -55,5 +57,14 @@ def decode_string(text,common_morse):
 
 	return new_string
 
+def encode_string(text, morse_common):
+	new_string = ""
+	for i in text:
+		if(i in morse_common):
+			new_string += morse_common[i]
+		else:
+			new_string += " "
+
+	return new_string
 
 main()
