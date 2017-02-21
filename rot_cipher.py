@@ -9,7 +9,7 @@ import sys
 def main():
 
 	args = sys.argv[1:]
-	if(args.__len__() < 5):
+	if(args.__len__() < 5 and args[2] != "-b"):
 		print "Usage rot_cipher.py -s string -r rot# -e|-d\n"	
 		sys.exit(1)
 
@@ -21,6 +21,9 @@ def main():
 		text = args[1] 
 		rot = int(args[3])
 		to_do = "decode"
+	elif((args[0] == "-s") and (args[2] == "-b")):
+		text = args[1]
+		to_do = "bruteforce"
 	else:
 		print "Usage rot_cipher.py -s string -r rot# -e|-d\n"	
 		sys.exit(1)
@@ -30,33 +33,50 @@ def main():
 	hash2 = {}
 	array1 = {}
 	array2 = {}
+	new_text = ''
 	x = 0
 	for l in lower:
 		array1[x] = l				
 		array2[x] = l				
 		x += 1
 
+	if(to_do == "bruteforce"):
+		rot = 0
+		for r in range(0,26):
+			rot += 1
+
+
+			for i in range(0,26):
+				if( (i+rot) <= 25):
+					array1[i] = array2[i+rot]		
+				else:
+					array1[i] = array2[(i+rot)-26]
+				hash2[array1[i]] = array2[i]	
+		
+			new_text = decode_string(text,hash2)
+			print new_text 
+	else:
+
 	#print "array1: %s" % array1
 	#print "array2: %s" % array2
-	for i in range(0,26):
+		for i in range(0,26):
 	#	print "i= %d" % i
-		if( (i+rot) <= 25):
-			array1[i] = array2[i+rot]		
-		else:
-			array1[i] = array2[(i+rot)-26]
-		hash1[array2[i]] = array1[i]
-		hash2[array1[i]] = array2[i]
+			if( (i+rot) <= 25):
+				array1[i] = array2[i+rot]		
+			else:
+				array1[i] = array2[(i+rot)-26]
+			hash1[array2[i]] = array1[i]
+			hash2[array1[i]] = array2[i]
 
-	text = text.lower()	
+		text = text.lower()	
 
 		#print "array2: %s" % array2
 	#print "array1: %s" % array1
-	new_text = ''
-	if(to_do == "encode"):
-		new_text = encode_string(text,hash1)
-	elif(to_do == "decode"):
-		new_text = decode_string(text,hash2)
-	print new_text
+		if(to_do == "encode"):
+			new_text = encode_string(text,hash1)
+		elif(to_do == "decode"):
+			new_text = decode_string(text,hash2)
+		print new_text
 
 def decode_string(text,ahash):
 	returned_string = ''
@@ -79,5 +99,7 @@ def encode_string(text,ahash):
 			new_string += ahash[i] 		
 	
 	return new_string
+
+	
 
 main()
