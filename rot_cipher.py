@@ -4,7 +4,6 @@ import string
 import sys
 import enchant
 
-
 word_check = enchant.Dict("en_US")
 
 def main():
@@ -60,7 +59,7 @@ def main():
 				hash2[array1[i]] = array2[i]	
 		
 			new_text = decode_string(text,hash2)
-			words = new_text.split(" ")
+			words = new_text.split()
 			if(word_checker(words) == 1):
 				print ("\033[44;33m%s\033[m" % new_text)
 			else:
@@ -114,7 +113,9 @@ def encode_string(text,ahash):
 def word_checker(words):
 	flag = 0
 	for w in words:
-		if(word_check.check(w)):
+		if(w.__len__() == 1 and (w != "a" or w != "i")):
+			next
+		elif(word_check.check(w)):
 			flag = 1
 	return flag	
 
