@@ -2,13 +2,18 @@
 
 import string
 import sys
+import enchant
 
-
-
+word_check = enchant.Dict("en_US")
 
 def main():
 
-	args = sys.argv[1:]
+	if(sys.argv.__len__() < 3):
+		print "Usage rot_cipher.py -s string -r rot# -e|-d\n"	
+		sys.exit(1)
+	else:
+		args = sys.argv[1:]
+
 	if(args.__len__() < 5 and args[2] != "-b"):
 		print "Usage rot_cipher.py -s string -r rot# -e|-d\n"	
 		sys.exit(1)
@@ -54,7 +59,12 @@ def main():
 				hash2[array1[i]] = array2[i]	
 		
 			new_text = decode_string(text,hash2)
-			print new_text 
+			words = new_text.split()
+			if(word_checker(words) == 1):
+				print ("\033[44;33m%s\033[m" % new_text)
+			else:
+				print new_text
+			
 	else:
 
 	#print "array1: %s" % array1
@@ -100,6 +110,13 @@ def encode_string(text,ahash):
 	
 	return new_string
 
-	
+def word_checker(words):
+	flag = 0
+	for w in words:
+		if(w.__len__() == 1 and (w != "a" or w != "i")):
+			next
+		elif(word_check.check(w)):
+			flag = 1
+	return flag	
 
 main()
